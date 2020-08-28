@@ -3,8 +3,6 @@ from kivy.uix.label import Label
 from kivy.core.window import Window
 from Mechanics import Paddle, Ball, Canvas
 
-Window.size = (650,400)
-
 class GamePanel(RelativeLayout):
     def __init__(self, **kwargs):
         super(GamePanel, self).__init__(**kwargs)
@@ -24,11 +22,10 @@ class GamePanel(RelativeLayout):
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
         self._keyboard = None
-        self.b1.text = "keyboard quit"
 
     def setup(self):
-        sz = Window.size
-        szp = [sz[0]/8, sz[0]/20]
+        sz = (Window.size[0],Window.size[1]*0.95)
+        szp = [sz[1]/20, 0.95*sz[0]/10]
         
         self.size_hint = (1, 0.95)
         self.pos_hint = {'top':0.95}
@@ -37,10 +34,10 @@ class GamePanel(RelativeLayout):
         self.PaddleLeft.parent = self
         self.Ball.parent = self
         
-        self.Canvas.setup()
-        self.Ball.setup([0,0], 5)
+        self.Canvas.setup(sz)
+        self.Ball.setup([sz[0]/2,sz[1]/2], 15)
         self.PaddleLeft.setup([0,sz[1]/2], szp)
-        self.PaddleRight.setup([sz[0],sz[1]/2], szp)
+        self.PaddleRight.setup([sz[0]-szp[0],sz[1]/2], szp)
 
     def _on_key_down(self, keyboard, keycode, text, modifiers):
         if keycode[1]=='up':
