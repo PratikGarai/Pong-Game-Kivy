@@ -38,15 +38,28 @@ class Ball():
         self.on_position()
 
     def move(self, time):
+        #vertical movement
         if((self.position[1]-self.radius==0 and self.velocity[1]<0) or (self.position[1]+self.radius==self.parent.size[1] and self.velocity[1]>0)):
             self.velocity[1] *= -1
-            self.position = [self.velocity[0]+self.position[0], self.velocity[1]+self.position[1]]
+            self.position[1] = self.velocity[1]+self.position[1]
         elif(self.position[1]-self.radius+self.velocity[1]<0):
-            self.position = [self.velocity[0]+self.position[0], self.radius]
+            self.position[1] = self.radius
         elif(self.position[1]+self.velocity[1]+self.radius>self.parent.size[1]):
-            self.position = [self.velocity[0]+self.position[0], self.parent.size[1]-self.radius]
+            self.position[1] = self.parent.size[1]-self.radius
         else:
-            self.position = [self.velocity[0]+self.position[0], self.velocity[1]+self.position[1]]
+            self.position[1] = self.velocity[1]+self.position[1]
+
+        #horizontal movement
+        if((self.position[0]-self.radius==0 and self.velocity[0]<0) or (self.position[0]+self.radius==self.parent.size[0] and self.velocity[0]>0)):
+            self.velocity[0] *= -1
+            self.position[0] = self.velocity[0]+self.position[0]
+        elif(self.position[0]-self.radius+self.velocity[0]<0):
+            self.position[0] = self.radius
+        elif(self.position[0]+self.velocity[0]+self.radius>self.parent.size[0]):
+            self.position[0] = self.parent.size[0]-self.radius
+        else:
+            self.position[0] = self.velocity[0]+self.position[0]
+
         self.parent.b1.text = str(self.position) + str(self.velocity)
         self.on_position()
 
