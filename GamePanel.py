@@ -2,6 +2,7 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.label import Label
 from kivy.core.window import Window
 from Mechanics import Paddle, Ball, Canvas
+from kivy.clock import Clock
 
 class GamePanel(RelativeLayout):
     def __init__(self, **kwargs):
@@ -11,7 +12,7 @@ class GamePanel(RelativeLayout):
 
         self.PaddleRight = Paddle(5)
         self.PaddleLeft = Paddle(5)
-        self.Ball = Ball(5)
+        self.Ball = Ball(0,-4)
         self.Canvas = Canvas()
 
         self.add_widget(self.Canvas)
@@ -38,6 +39,8 @@ class GamePanel(RelativeLayout):
         self.Ball.setup([sz[0]/2,sz[1]/2], 15)
         self.PaddleLeft.setup([0,sz[1]/2], szp)
         self.PaddleRight.setup([sz[0]-szp[0],sz[1]/2], szp)
+
+        Clock.schedule_interval(self.Ball.move, 1/10)
 
     def _on_key_down(self, keyboard, keycode, text, modifiers):
         if keycode[1]=='up':

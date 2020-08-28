@@ -27,8 +27,8 @@ class Paddle():
 
 class Ball():
 
-    def __init__(self, velocity):
-        self.velocity = velocity
+    def __init__(self, vx, vy):
+        self.velocity = [vx, vy]
         self.position = [0,0]
         self.size = [0,0]
 
@@ -37,9 +37,17 @@ class Ball():
         self.radius = radius
         self.on_position()
 
-    def move(self, direction):
-        self.position = [self.velocity[0]+self.position[0], self.velocity[1]+self.position[1]]
-        self.parent.b1.text = str(self.position)
+    def move(self, time):
+        if((self.position[1]-self.radius==0 and self.velocity[1]<0) or (self.position[1]+self.radius==self.parent.size[1] and self.velocity[1]>0)):
+            self.velocity[1] *= -1
+            self.position = [self.velocity[0]+self.position[0], self.velocity[1]+self.position[1]]
+        elif(self.position[1]-self.radius+self.velocity[1]<0):
+            self.position = [self.velocity[0]+self.position[0], self.radius]
+        elif(self.position[1]+self.velocity[1]+self.radius>self.parent.size[1]):
+            self.position = [self.velocity[0]+self.position[0], self.parent.size[1]-self.radius]
+        else:
+            self.position = [self.velocity[0]+self.position[0], self.velocity[1]+self.position[1]]
+        self.parent.b1.text = str(self.position) + str(self.velocity)
         self.on_position()
 
     def on_position(self):

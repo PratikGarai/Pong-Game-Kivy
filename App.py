@@ -12,7 +12,7 @@ from GamePanel import GamePanel
 class HelpLabel(Label):
     def __init__(self, **kwargs):
         super(HelpLabel, self).__init__(**kwargs)
-        self.text = "W|S moves left paddle    ;    UP|DOWN arrow moves right paddle"
+        self.text = "W|S->left paddle  UP|DOWN->right paddle  ; Score point by making ball touch opposite wall"
 
     def setup(self):
         self.size_hint = (1,0.05)
