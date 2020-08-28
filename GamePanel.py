@@ -2,7 +2,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.core.window import Window
-from Mechanics import Paddle, Ball
+from Mechanics import Paddle, Ball, Canvas
 
 class GamePanel(BoxLayout):
     def __init__(self, **kwargs):
@@ -16,6 +16,9 @@ class GamePanel(BoxLayout):
         self.PaddleRight = Paddle(5)
         self.PaddleLeft = Paddle(5)
         self.Ball = Ball(5)
+        self.Canvas = Canvas()
+
+        self.add_widget(self.Canvas)
 
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_key_down)
@@ -36,7 +39,11 @@ class GamePanel(BoxLayout):
         self.PaddleRight.setup([1,0.5])
 
     def _on_key_down(self, keyboard, keycode, text, modifiers):
-        if keycode[1]=='w':
-            self.b1.text = str(keyboard)+"\n"+str(text)+"\n"+str(modifiers)
         if keycode[1]=='up':
-            self.b2.text = str(keycode)
+            self.PaddleRight.move(1)
+        elif keycode[1]=='down':
+            self.PaddleRight.move(-1)
+        elif keycode[1]=='w':
+            self.PaddleLeft.move(1)
+        elif keycode[1]=='w':
+            self.PaddleLeft.move(-1)
