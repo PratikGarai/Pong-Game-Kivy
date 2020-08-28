@@ -7,6 +7,7 @@ from GamePanel import GamePanel
 
 Config.set('graphics', 'height', 400)
 Config.set('graphics', 'width', 650)
+Config.set('graphics', 'resizable', False)
 
 class HelpLabel(Button):
     def __init__(self, **kwargs):
