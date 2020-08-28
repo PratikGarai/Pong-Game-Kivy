@@ -1,5 +1,4 @@
-from kivy.properties import ListProperty
-from kivy.uix.properties import Properties
+from kivy.uix.widget import Widget
 
 class Paddle():
 
@@ -15,7 +14,7 @@ class Paddle():
         self.position[1] += direction*self.velocity
         self.on_position()
 
-    def on_position(self, instance, pos):
+    def on_position(self):
         #nthing yet
         pass
 
@@ -37,4 +36,6 @@ class Ball():
         #redraw ball here
         pass
 
-class Canvas(widget):
+class Canvas(Widget):
+    def __init__(self, **kwargs):
+        super(Canvas, self).__init__(**kwargs)

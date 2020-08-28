@@ -1,13 +1,12 @@
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.core.window import Window
 from Mechanics import Paddle, Ball, Canvas
 
-class GamePanel(BoxLayout):
+class GamePanel(RelativeLayout):
     def __init__(self, **kwargs):
         super(GamePanel, self).__init__(**kwargs)
-        self.orientation = 'horizontal'
         self.b1 = Button(text="Left")
         self.b2 = Button(text="Right")
         self.add_widget(self.b1)
