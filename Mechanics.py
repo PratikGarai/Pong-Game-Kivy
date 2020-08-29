@@ -98,6 +98,16 @@ class Ball():
         m = [1,-1]
         if not current:
             return ([random.choice(x)*random.choice(m), random.choice(x)*random.choice(m)])
+        vel = [0,0]
+        if current[0]<0:
+            vel[0] = random.choice(x)*-1
+        else:
+            vel[0] = random.choice(x)*1
+        if current[1]<0:
+            vel[1] = random.choice(x)*-1
+        else:
+            vel[1] = random.choice(x)*1
+        return vel
 
 class Canvas(Widget):
     def __init__(self, **kwargs):
