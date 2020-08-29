@@ -14,7 +14,7 @@ class GamePanel(RelativeLayout):
 
         self.PaddleRight = Paddle(5)
         self.PaddleLeft = Paddle(5)
-        self.Ball = Ball(5,0)
+        self.Ball = Ball()
         self.Canvas = Canvas()
 
         self.add_widget(self.Canvas)

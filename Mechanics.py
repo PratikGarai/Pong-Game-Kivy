@@ -1,5 +1,6 @@
 from kivy.uix.widget import Widget
-from kivy.graphics import Rectangle, Line
+from kivy.graphics import Rectangle, Line, Ellipse
+import random
 
 class Paddle():
 
@@ -26,8 +27,8 @@ class Paddle():
 
 class Ball():
 
-    def __init__(self, vx, vy):
-        self.velocity = [vx, vy]
+    def __init__(self):
+        self.velocity = self.get_velocity()
         self.position = [0,0]
         self.size = [0,0]
 
@@ -44,12 +45,15 @@ class Ball():
         if((self.position[0]==self.radius+self.p1.size[0] and self.position[1]<self.p1.position[1]+self.p1.size[1] and self.position[1]>self.p1.position[1]) or (self.position[0]+self.radius==self.parent.size[0]-self.p2.size[0] and self.position[1]<self.p2.position[1]+self.p2.size[1] and self.position[1]>self.p2.position[1])):
             self.velocity[0] *= -1
             self.position[0] = self.velocity[0]+self.position[0]
+            self.position[1] = self.velocity[1]+self.position[1]
             paddle_hit = 1
         elif(self.position[0]-self.radius+self.velocity[0]<self.p1.size[0] and self.position[0]>self.p1.size[0]+self.radius):
             self.position[0] = self.radius+self.p1.size[0]
+            self.position[1] = self.velocity[1]+self.position[1]
             paddle_hit = 1
         elif(self.position[0]+self.velocity[0]+self.radius>self.parent.size[0]-self.p2.size[0] and self.position[0]<self.parent.size[0]-self.p2.size[0]-self.radius):
             self.position[0] = self.parent.size[0]-self.radius-self.p2.size[0]
+            self.position[1] = self.velocity[1]+self.position[1]
             paddle_hit = 1
 
         if paddle_hit:
@@ -64,6 +68,7 @@ class Ball():
                 self.parent.score(1)
             else :
                 self.parent.score(0)
+            self.velocity = self.get_velocity(self.velocity)
         elif(self.position[0]-self.radius+self.velocity[0]<0):
             self.position[0] = self.radius
         elif(self.position[0]+self.velocity[0]+self.radius>self.parent.size[0]):
@@ -88,6 +93,12 @@ class Ball():
     def on_position(self):
         self.parent.Canvas.redraw()
 
+    def get_velocity(self, current=None):
+        x = [3,3.5,4,4.5,5,5.5,6,6.5,7]
+        m = [1,-1]
+        if not current:
+            return ([random.choice(x)*random.choice(m), random.choice(x)*random.choice(m)])
+
 class Canvas(Widget):
     def __init__(self, **kwargs):
         super(Canvas, self).__init__(**kwargs)
@@ -104,4 +115,4 @@ class Canvas(Widget):
             Line(points = [1,1,1,self.sy-1,self.sx-1,self.sy-1, self.sx-1,1,1,1], width = 2)
             Rectangle(pos = self.p1.position , size=self.p1.size)
             Rectangle(pos = self.p2.position , size=self.p2.size)
-            Line(circle=(*self.b.position,self.b.radius))
+            Ellipse(pos = [self.b.position[0]-self.b.radius, self.b.position[1]-self.b.radius], size = (2*self.b.radius, 2*self.b.radius))
