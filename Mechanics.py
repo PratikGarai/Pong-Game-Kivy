@@ -41,19 +41,16 @@ class Ball():
     def move(self, time):
         paddle_hit = 0
 
-        if((self.position[0]==self.radius+self.p1.size[0] and self.position[1]<self.p1.position[1]+self.p1.size[1] and self.position[1]>self.p1.position[1]) or (self.position[0]+self.radius==self.parent.size[0]-self.p2.size[0])):
+        if((self.position[0]==self.radius+self.p1.size[0] and self.position[1]<self.p1.position[1]+self.p1.size[1] and self.position[1]>self.p1.position[1]) or (self.position[0]+self.radius==self.parent.size[0]-self.p2.size[0] and self.position[1]<self.p2.position[1]+self.p2.size[1] and self.position[1]>self.p2.position[1])):
             self.velocity[0] *= -1
             self.position[0] = self.velocity[0]+self.position[0]
             paddle_hit = 1
-            print('Case 1')
         elif(self.position[0]-self.radius+self.velocity[0]<self.p1.size[0] and self.position[0]>self.p1.size[0]+self.radius):
             self.position[0] = self.radius+self.p1.size[0]
             paddle_hit = 1
-            print('Case 2')
-        elif(self.position[0]+self.velocity[0]+self.radius>self.parent.size[0]-self.p2.size[0]):
+        elif(self.position[0]+self.velocity[0]+self.radius>self.parent.size[0]-self.p2.size[0] and self.position[0]<self.parent.size[0]-self.p2.size[0]-self.radius):
             self.position[0] = self.parent.size[0]-self.radius-self.p2.size[0]
             paddle_hit = 1
-            print('Case 3')
 
         if paddle_hit:
             self.on_position()
@@ -67,13 +64,10 @@ class Ball():
                 self.parent.score(1)
             else :
                 self.parent.score(0)
-            print('Case 4')
         elif(self.position[0]-self.radius+self.velocity[0]<0):
             self.position[0] = self.radius
-            print('Case 5')
         elif(self.position[0]+self.velocity[0]+self.radius>self.parent.size[0]):
             self.position[0] = self.parent.size[0]-self.radius
-            print('Case 6')
         else:
             self.position[0] = self.velocity[0]+self.position[0]
 
